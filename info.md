@@ -14,13 +14,15 @@ In the root folder, execute:
 sudo docker build -t mirai_lab --progress=plain .
 ```
 
-## run the container with interactive shell
+## run the container (alone) with interactive shell
 
-Warning, the internet access of the container has to be removed somehow
+Warning, as is, the container has internet access, do not run the bot.
 ```bash
 sudo docker run -it mirai_lab
 ```
 
 ## Using docker compose
 
-docker-compose run <service_name>
+```bash
+sudo docker compose run cnc
+```

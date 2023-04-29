@@ -4,22 +4,22 @@ version: '3.9'
 
 services:
   cnc:
-    image: mirai_lab
     #build:
-      #context: .
-      #dockerfile: Dockerfile
-    #image: mirai_lab
+    #  context: .
+    #  dockerfile: Dockerfile
+    image: mirai_lab
+    domainname: mirai.cnc.lab
     container_name: mirai_lab_cnc
     networks:
       shared:
         ipv4_address: 10.1.1.2
+    entrypoint: "apt install sl"
 
   bot:
-    image: mirai_lab
     #build:
-      #context: .
-      #dockerfile: Dockerfile
-    #image: mirai_lab
+    #  context: .
+    #  dockerfile: Dockerfile
+    image: mirai_lab
     container_name: mirai_lab_bot
     networks:
       shared:
@@ -27,8 +27,11 @@ services:
 
 networks:
   shared:
+    driver: bridge
+    internal: true
     ipam:
       driver: default
       config:
         - subnet: "10.1.1.0/24"
+  default:
     internal: true

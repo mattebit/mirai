@@ -9,7 +9,7 @@ RUN apt update
 RUN apt upgrade -y
 
 # Install dependencies
-RUN apt install git wget gcc golang electric-fence mysql-client screen dialog python3 apache2 gcc-sh4-linux-gnu iputils-ping -y
+RUN apt install git wget gcc golang electric-fence mysql-client screen dialog python3 apache2 gcc-sh4-linux-gnu iputils-ping dnsutils -y
 
 # Copy files
 COPY . /home/
