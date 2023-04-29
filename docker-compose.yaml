@@ -8,12 +8,11 @@ services:
     #  context: .
     #  dockerfile: Dockerfile
     image: mirai_lab
-    domainname: mirai.cnc.lab
+    domainname: cnc.mirai-lab
     container_name: mirai_lab_cnc
     networks:
       shared:
         ipv4_address: 10.1.1.2
-    entrypoint: "apt install sl"
 
   bot:
     #build:

@@ -1,8 +1,8 @@
 ## The actual settings of the bots are
 
-cnc domain name= cnc.lab.com
-scanner.lab.com
-dns 8.8.8.8
+cnc domain name= cnc.mirai-lab
+scanner cnc.mirai-lab
+dns 127.0.0.11
 
 # Docker
 
