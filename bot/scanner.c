@@ -675,6 +675,8 @@ static ipv4_t get_random_ip(void)
 {
     uint32_t tmp;
     uint8_t o1, o2, o3, o4;
+    
+    //TODO: return fixed addresses to shorten time
 
     do
     {

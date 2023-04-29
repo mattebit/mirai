@@ -1,0 +1,34 @@
+version: '3.9'
+
+# TODO: remove internet access
+
+services:
+  cnc:
+    image: mirai_lab
+    #build:
+      #context: .
+      #dockerfile: Dockerfile
+    #image: mirai_lab
+    container_name: mirai_lab_cnc
+    networks:
+      shared:
+        ipv4_address: 10.1.1.2
+
+  bot:
+    image: mirai_lab
+    #build:
+      #context: .
+      #dockerfile: Dockerfile
+    #image: mirai_lab
+    container_name: mirai_lab_bot
+    networks:
+      shared:
+        ipv4_address: 10.1.1.3
+
+networks:
+  shared:
+    ipam:
+      driver: default
+      config:
+        - subnet: "10.1.1.0/24"
+    internal: true
