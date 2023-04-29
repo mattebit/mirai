@@ -8,7 +8,7 @@ services:
     #  context: .
     #  dockerfile: Dockerfile
     image: mirai_lab
-    domainname: cnc.mirai-lab
+    hostname: cnc.mirai-lab
     container_name: mirai_lab_cnc
     networks:
       shared:
@@ -23,6 +23,16 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.3
+  
+  attacker:
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    image: mirai_lab
+    container_name: mirai_lab_attacker
+    networks:
+      shared:
+        ipv4_address: 10.1.1.4
 
 networks:
   shared:
