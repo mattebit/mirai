@@ -26,3 +26,9 @@ sudo docker run -it mirai_lab
 ```bash
 sudo docker compose run cnc
 ```
+```bash
+sudo docker compose run bot
+```
+```bash
+sudo docker compose run attacker
+```
