@@ -13,6 +13,7 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.2
+    command: /bin/bash -c "/bin/bash /home/cnc/entrypoint.sh && /bin/bash" # setup mysql
 
   bot:
     #build:

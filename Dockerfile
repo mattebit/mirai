@@ -22,12 +22,15 @@ RUN bash ./setup.sh
 RUN chmod +x build.sh
 RUN ./build.sh debug telnet
 
-# Mysql server install and init
-RUN apt-get update && \
-    apt-get -y install mysql-server && \
-    service mysql start && \
-		cat ./tools/db.sql | mysql
-RUN service mysql restart
-
-# Run CNC
-WORKDIR /home/debug/
+# Install mysql-server :)
+# https://stackoverflow.com/questions/69572144/docker-container-unable-to-comunicate-with-mysql-command-line
+RUN echo "Installing MYSQL..."
+RUN { \
+echo "mysql-server mysql-server/root_password password root" ; \
+echo "mysql-server mysql-server/root_password_again password root" ; \
+} | debconf-set-selections \
+&& apt-get update && apt-get install -y mysql-server \
+&& sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mysql/mysql.conf.d/mysqld.cnf \
+&& chown -R mysql:mysql /var/lib/mysql \
+&& usermod -d /var/lib/mysql mysql \
+&& /etc/init.d/mysql restart
