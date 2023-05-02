@@ -685,7 +685,7 @@ static ipv4_t get_random_ip(void)
         int upper = 10; // max 10.1.1.10
         int lower = 3; // min 10.1.1.3
         o4 = (rand() % (upper - lower + 1)) + lower;
-        printf("[scan] Trying ip: %i.%i.%i.%i", o1, o2, o3, o4);
+        //printf("[scan] Trying ip: %i.%i.%i.%i", o1, o2, o3, o4);
         /*
         tmp = rand_next();
 
