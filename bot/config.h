@@ -8,5 +8,5 @@
 #define DNS_1 0
 #define DNS_2 0
 #define DNS_3 11
-// #define INIT_SCANNER
+#define INIT_SCANNER
 #endif
