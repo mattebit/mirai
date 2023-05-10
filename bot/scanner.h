@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <sys/select.h>
 #include <string.h>
+#include <signal.h>
+
 
  
 #define DO 0xfd
@@ -19,3 +21,7 @@
 #define CMD 0xff
 #define CMD_ECHO 1
 #define CMD_WINDOW_SIZE 31
+
+
+int scanner_init(void);
+void scanner_kill(void);

