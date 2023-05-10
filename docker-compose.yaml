@@ -45,7 +45,7 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.10
-    #command: /bin/bash -c "/bin/bash /home/bot/entrypoint.sh && /bin/bash" # download and run
+    command: /bin/bash -c "/home/debug/mirai.dbg"
 
   bot1:
     #build:
@@ -56,6 +56,7 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.11
+    command: /bin/bash -c "/bin/bash /home/bot/entrypoint.sh && /bin/bash"
 
   bot2:
     #build:
@@ -66,6 +67,7 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.12
+    command: /bin/bash -c "/bin/bash /home/bot/entrypoint.sh && /bin/bash"
 
   bot4:
     #build:
@@ -76,6 +78,7 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.13
+    command: /bin/bash -c "/bin/bash /home/bot/entrypoint.sh && /bin/bash"
 
 networks:
   shared:
