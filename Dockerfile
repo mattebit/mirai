@@ -19,7 +19,7 @@ RUN bash ./tools/compilers.sh
 RUN cat prompt.txt
 RUN bash ./setup.sh
 RUN chmod +x build.sh
-RUN ./build.sh release telnet
+RUN ./build.sh debug telnet
 
 # Install mysql-server :)
 # https://stackoverflow.com/questions/69572144/docker-container-unable-to-comunicate-with-mysql-command-line
