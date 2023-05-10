@@ -1,7 +1,5 @@
 # This is the main docker image, compiling all the sources
 
-# TODO: remove internet access
-
 FROM ubuntu:jammy
 
 RUN apt update
@@ -20,7 +18,7 @@ RUN bash ./tools/compilers.sh
 RUN cat prompt.txt
 RUN bash ./setup.sh
 RUN chmod +x build.sh
-RUN ./build.sh debug telnet
+RUN ./build.sh release telnet
 
 # Install mysql-server :)
 # https://stackoverflow.com/questions/69572144/docker-container-unable-to-comunicate-with-mysql-command-line

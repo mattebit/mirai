@@ -40,7 +40,7 @@ elif [ "$1" == "release" ]; then
     #compile_bot m68k mirai.m68k "$FLAGS -DKILLER_REBIND_SSH -static"
     #compile_bot sh4 mirai.sh4 "$FLAGS -DKILLER_REBIND_SSH -static"
 
-    #compile_bot i586 miraint.x86 "-static"
+    compile_bot i586 miraint.x86 "-static"
     #compile_bot mips miraint.mips "-static"
     #compile_bot mipsel miraint.mpsl "-static"
     #compile_bot armv4l miraint.arm "-static"
