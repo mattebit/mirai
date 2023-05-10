@@ -12,7 +12,7 @@
   user = root
   server = /usr/sbin/in.telnetd
   log_on_failure += USERID
-  disable = yes
+  disable = no
   }
 -sudo passwd root:
   password: root
