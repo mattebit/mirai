@@ -33,7 +33,7 @@ services:
     container_name: mirai_lab_scanner
     networks:
       shared:
-        ipv4_address: 10.1.1.11
+        ipv4_address: 10.1.1.4
     command: /bin/bash -c "/bin/bash /home/build/scanListen && /bin/bash" # start scanner
   
   bot0:
