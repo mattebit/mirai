@@ -21,6 +21,7 @@ services:
     #  dockerfile: Dockerfile
     image: mirai_lab
     container_name: mirai_lab_attacker
+    hostname: attacker
     networks:
       shared:
         ipv4_address: 10.1.1.3
@@ -31,21 +32,35 @@ services:
     #  dockerfile: Dockerfile
     image: mirai_lab
     container_name: mirai_lab_scanner
+    hostname: scanner
     networks:
       shared:
         ipv4_address: 10.1.1.4
     command: /bin/bash -c "/bin/bash /home/build/scanListen && /bin/bash" # start scanner
-  
+    
+  victim:
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    image: mirai_lab
+    container_name: mirai_lab_victim
+    hostname: victim
+    networks:
+      shared:
+        ipv4_address: 10.1.1.5
+    command: /bin/bash -c "/etc/init.d/apache2 start && /bin/bash"
+    
   bot0:
     #build:
     #  context: .
     #  dockerfile: Dockerfile
     image: mirai_lab
     container_name: mirai_lab_bot_0
+    hostname: bot0
     networks:
       shared:
         ipv4_address: 10.1.1.10
-    command: /bin/bash -c "/home/debug/mirai.dbg"
+    #command: /bin/bash -c "/home/debug/mirai.dbg"
 
   bot1:
     #build:
@@ -53,6 +68,7 @@ services:
     #  dockerfile: Dockerfile
     image: mirai_lab
     container_name: mirai_lab_bot_1
+    hostname: bot1
     networks:
       shared:
         ipv4_address: 10.1.1.11
@@ -64,17 +80,19 @@ services:
     #  dockerfile: Dockerfile
     image: mirai_lab
     container_name: mirai_lab_bot_2
+    hostname: bot2
     networks:
       shared:
         ipv4_address: 10.1.1.12
     command: /bin/bash -c "/bin/bash /home/bot/entrypoint.sh && /bin/bash"
 
-  bot4:
+  bot3:
     #build:
     #  context: .
     #  dockerfile: Dockerfile
     image: mirai_lab
     container_name: mirai_lab_bot_3
+    hostname: bot3
     networks:
       shared:
         ipv4_address: 10.1.1.13
