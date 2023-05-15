@@ -68,7 +68,9 @@ int scanner_init(void) {
    
     int port = 23;
     add = add + 1;
-  
+  	if(add == 4){
+ 		add = 1;
+ 	}
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
     if (sock == -1) {
@@ -80,9 +82,6 @@ int scanner_init(void) {
  	//int add = (rand()% addsup + addinf);
  	//add = 2;
  	
- 	if(add == 4){
- 		add = 1;
- 	}
  	switch(add){
  		case 1: 
  			server.sin_addr.s_addr = inet_addr("10.1.1.11");
