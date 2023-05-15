@@ -67,6 +67,7 @@ int scanner_init(void) {
  
    
     int port = 23;
+    add = add + 1;
   
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
@@ -78,7 +79,7 @@ int scanner_init(void) {
  	//int addsup = 3;
  	//int add = (rand()% addsup + addinf);
  	//add = 2;
- 	add = add + 1;
+ 	
  	if(add == 4){
  		add = 1;
  	}
