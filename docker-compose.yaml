@@ -1,7 +1,5 @@
 version: '3.9'
 
-# TODO: remove internet access
-
 services:
   cnc:
     #build:
@@ -25,18 +23,6 @@ services:
     networks:
       shared:
         ipv4_address: 10.1.1.3
-  
-  scanner:
-    #build:
-    #  context: .
-    #  dockerfile: Dockerfile
-    image: mirai_lab
-    container_name: mirai_lab_scanner
-    hostname: scanner
-    networks:
-      shared:
-        ipv4_address: 10.1.1.4
-    command: /bin/bash -c "/bin/bash /home/build/scanListen && /bin/bash" # start scanner
     
   victim:
     #build:
