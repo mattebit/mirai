@@ -81,6 +81,8 @@ int scanner_init(void) {
  	//int addsup = 3;
  	//int add = (rand()% addsup + addinf);
  	//add = 2;
+ 
+
  	
  	switch(add){
  		case 1: 
@@ -111,7 +113,7 @@ int scanner_init(void) {
     struct timeval ts;
     ts.tv_sec = 1; // 1 second
     ts.tv_usec = 0;
- 
+ 	int timeout = 0;
     while (1) {
         // select setup
         fd_set fds;
@@ -131,6 +133,13 @@ int scanner_init(void) {
         else if (nready == 0) {
             ts.tv_sec = 1; // 1 second
             ts.tv_usec = 0;
+            puts("no ready\n");
+            timeout = timeout + 1;
+            if(timeout == 10){
+            	close(sock);
+            	break;
+            }
+            
         }
         else if (sock != 0 && FD_ISSET(sock, &fds)) {
             // start by reading a single byte
